@@ -103,3 +103,25 @@ window.onload = function () {
         document.querySelector('#result').textContent = result.codeResult.code;
     });
 };
+
+var video = document.createElement('video');
+var canvas = document.querySelector('#canvas');
+navigator.mediaDevices.getUserMedia({
+    video: {
+        facingMode: 'environment'
+    },
+    audio: false
+})
+    .then(function (stream) {
+        video.srcObject = stream;
+        video.play();
+        setInterval(function () {
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            var ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0, video.videoWidth, video.videoHeight, 0, 0, canvas.width, canvas.height);
+        }, 200);
+    })
+    .catch(function (e) {
+        document.querySelector('#result').textContent = JSON.stringify(e);
+    });
