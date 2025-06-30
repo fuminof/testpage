@@ -64,6 +64,7 @@ const logReset = () => {
 
 document.getElementsByTagName('button')[0].addEventListener('click', () => {
     logReset()
+    readLog.textContent = "だみーだよ";
     requestPosting(postingUrl, scanData)
         .then(response => {
             console.log('response', response)
@@ -86,6 +87,7 @@ document.getElementsByTagName('button')[1].addEventListener('click', () => {
 
 const readLog = document.getElementById("readLog");
 const readLog2 = document.getElementById("readLog2");
+const readLog3 = document.getElementById("readLog3");
 
 const readStart = (async () => {
     readLog.textContent = await "clicked read button";
@@ -103,10 +105,11 @@ const readStart = (async () => {
             console.log(message);
             const record = message.records[0];
             const { data, encoding, recordType } = record;
+            readLog2.textContent = record;
             if (recordType === "text") {
                 const textDecoder = new TextDecoder(encoding);
                 const text = textDecoder.decode(data);
-                readLog.textContent = text;
+                readLog3.textContent = text;
                 let scanData = { post_text: text };
             }
         });
