@@ -1,3 +1,55 @@
+console.log("main.js!!");
+
+$(document).ready(() => {
+    console.log("Ready!!");
+});
+
+$("#my_start").click(() => {
+    console.log("Start!!");
+
+    // Quagga
+    Quagga.init({
+        inputStream: {
+            name: "Live",
+            type: "LiveStream",
+            target: document.getElementById("my_quagga")
+        },
+        decoder: {
+            readers: ["ean_reader"]
+        }
+    }, err => {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        console.log("Initialization finished!!");
+        Quagga.start();
+    });
+
+    Quagga.onProcessed(result => {
+        if (result == null) return;
+        if (typeof (result) != "object") return;
+        if (result.boxes == undefined) return;
+        const ctx = Quagga.canvas.ctx.overlay;
+        const canvas = Quagga.canvas.dom.overlay;
+        ctx.clearRect(0, 0, parseInt(canvas.width), parseInt(canvas.height));
+        Quagga.ImageDebug.drawPath(result.box,
+            { x: 0, y: 1 }, ctx, { color: "blue", lineWidth: 5 });
+    });
+
+    Quagga.onDetected(result => {
+        console.log(result.codeResult.code);
+        $("#my_result").text(result.codeResult.code);
+        $("#my_barcode div").barcode(result.codeResult.code, "ean13");
+    });
+});
+
+$("#my_stop").click(() => {
+    console.log("Stop!!");
+    Quagga.stop();
+});
+
+
 const postingUrl = 'http://127.0.0.1:5000/post';
 let scanData = { post_text: 'bigUnko' };
 
@@ -62,66 +114,3 @@ const readStart = (async () => {
         readLog.textContent = error;
     }
 });
-
-window.onload = function () {
-    Quagga.init({
-        inputStream: {
-            type: "LiveStream",
-            target: document.querySelector('#container')
-        },
-        constraints: {
-            facingMode: "environment",
-        },
-        decoder: {
-            readers: ["ean_reader"]
-        }
-    },
-        function (err) {
-            if (err) {
-                console.log(err);
-                return;
-            }
-            console.log("Initialization finished. Ready to start");
-            Quagga.start();
-        });
-
-    Quagga.onProcessed(function (result) {
-        var ctx = Quagga.canvas.ctx.overlay;
-        var canvas = Quagga.canvas.dom.overlay;
-
-        ctx.clearRect(0, 0, parseInt(canvas.width), parseInt(canvas.height));
-
-        if (result) {
-            if (result.box) {
-                console.log(JSON.stringify(result.box));
-                Quagga.ImageDebug.drawPath(result.box, { x: 0, y: 1 }, ctx, { color: 'blue', lineWidth: 2 });
-            }
-        }
-    });
-
-    Quagga.onDetected(function (result) {
-        document.querySelector('#result').textContent = result.codeResult.code;
-    });
-};
-
-var video = document.createElement('video');
-var canvas = document.querySelector('#canvas');
-navigator.mediaDevices.getUserMedia({
-    video: {
-        facingMode: 'environment'
-    },
-    audio: false
-})
-    .then(function (stream) {
-        video.srcObject = stream;
-        video.play();
-        setInterval(function () {
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            var ctx = canvas.getContext('2d');
-            ctx.drawImage(video, 0, 0, video.videoWidth, video.videoHeight, 0, 0, canvas.width, canvas.height);
-        }, 200);
-    })
-    .catch(function (e) {
-        document.querySelector('#result').textContent = JSON.stringify(e);
-    });
