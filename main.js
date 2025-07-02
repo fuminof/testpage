@@ -105,11 +105,11 @@ const readStart = (async () => {
             console.log(message);
             const record = message.records[0];
             const { data, encoding, recordType } = record;
-            readLog2.textContent = record;
+            readLog2.textContent = "record=", record;
             if (recordType === "text") {
                 const textDecoder = new TextDecoder(encoding);
                 const text = textDecoder.decode(data);
-                readLog3.textContent = text;
+                readLog3.textContent = "text=", text;
                 let scanData = { post_text: text };
             }
         });
