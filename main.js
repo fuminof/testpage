@@ -104,8 +104,10 @@ const readStart = (async () => {
             console.log(`> Serial Number: ${serialNumber}`);
             console.log(message);
             const record = message.records[0];
+            const idNumber = message.id;
             const { data, encoding, recordType } = record;
             readLog2.textContent =(`>Serial Number: ${serialNumber}`);
+            readLog3.textContent = "ID", idNumber;
             if (recordType === "text") {
                 const textDecoder = new TextDecoder(encoding);
                 const text = textDecoder.decode(data);
