@@ -87,3 +87,7 @@ body {
     justify-content: space-around;
     align-items: center;
 }
+
+.my_input {
+    width: 50%;
+}
