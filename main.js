@@ -130,3 +130,10 @@ const showClock = () => {
     timelog.textContent = `${hour} : ${minute} : ${second}`;
 }
 setInterval(showClock, 1000);
+
+
+
+const ondo = () => {
+    let goukei = eval(document.fm.kion.value) + eval(document.fm.suion.value);
+    console.log(goukei);
+};
