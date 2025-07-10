@@ -62,7 +62,7 @@ const logReset = () => {
     readLog2.textContent = "";
 }
 
-document.getElementsByTagName('button')[0].addEventListener('click', () => {
+document.getElementsByTagName('button')[3].addEventListener('click', () => {
     logReset()
     readLog.textContent = "だみーだよ";
     requestPosting(postingUrl, scanData)
@@ -73,7 +73,7 @@ document.getElementsByTagName('button')[0].addEventListener('click', () => {
 
 });
 
-document.getElementsByTagName('button')[1].addEventListener('click', () => {
+document.getElementsByTagName('button')[2].addEventListener('click', () => {
     logReset()
     readStart()
     requestPosting(postingUrl, scanData)
@@ -122,12 +122,14 @@ const readStart = (async () => {
 
 
 const timelog = document.getElementById("rialtime");
+const timelog2 = document.getElementById("rialtime_x")
 const showClock = () => {
     const now = new Date();
     const hour = now.getHours();
     const minute = String(now.getMinutes()).padStart(2, '0');
     const second = String(now.getSeconds()).padStart(2, '0');
     timelog.textContent = `${hour} : ${minute} : ${second}`;
+    timelog2.textContent = `${hour} : ${minute}`;
 }
 setInterval(showClock, 1000);
 
