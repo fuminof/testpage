@@ -68,7 +68,7 @@ document.getElementsByTagName('button')[3].addEventListener('click', () => {
     requestPosting(postingUrl, scanData)
         .then(response => {
             console.log('response', response)
-            readLog2.textContent = JSON.stringify(response.data);
+            readLog.textContent = JSON.stringify(response.data);
         });
 
 });
