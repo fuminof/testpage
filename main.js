@@ -50,7 +50,7 @@ $("#my_stop").click(() => {
 });
 
 
-const postingUrl = 'http://219.94.250.153:5000/post';
+const postingUrl = 'http://219.94.250.153:5000/helloworld';
 let scanData = { post_text: 'bigUnko' };
 
 const requestPosting = (postingUrl, scanData) => {
