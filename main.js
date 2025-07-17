@@ -1,4 +1,4 @@
-console.log("main.js!!0717001");
+console.log("main.js!!");
 
 $(document).ready(() => {
     console.log("Ready!!");
@@ -50,7 +50,8 @@ $("#my_stop").click(() => {
 });
 
 
-const postingUrl = 'https://219.94.250.153:5000/helloworld';
+const postingUrl = 'http://219.94.250.153:5000/helloworld';
+//const postingUrl = 'http://127.0.0.1:5000/helloworld';
 let scanData = { post_text: 'bigUnko' };
 
 const requestPosting = (postingUrl, scanData) => {
@@ -68,7 +69,7 @@ document.getElementsByTagName('button')[3].addEventListener('click', () => {
     requestPosting(postingUrl, scanData)
         .then(response => {
             console.log('response', response)
-            readLog.textContent = JSON.stringify(response.data);
+            readLog2.textContent = JSON.stringify(response.data);
         });
 
 });
