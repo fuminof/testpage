@@ -1,4 +1,4 @@
-console.log("main.js!!");
+console.log("main.js!!0717002");
 
 $(document).ready(() => {
     console.log("Ready!!");
